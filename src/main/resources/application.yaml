@@ -1,0 +1,89 @@
+#-----------------------------------
+# Application
+#-----------------------------------
+spring:
+  application:
+    name: Talent Center
+  profiles:
+    active: "@spring.profiles.active@"
+  main:
+    lazy-initialization: false
+  messages:
+    encoding: UTF-8
+    basename: i18n/messages
+  output:
+    ansi:
+      enabled: always
+  datasource:
+    url: jdbc:postgresql://cloudias79.com:5545/new_db_talentcenter
+    username: usrtalentcenter
+    password: m1QVs3zKymgPduz
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      max-lifetime: 60000
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            'non_contextual_creation': true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+server:
+  port: 8081
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+    com:
+      tujuhsembilan: TRACE
+
+application:
+  minio:
+    url: https://minio.cloudias79.com
+    username: devtalentcenter
+    password: as4Dx6L4Uf1zFkyy
+    bucketName: talent-center-app
+
+# jwt configuration
+jwt:
+  secret: my32characterultrasecureandultralongbookrecipe
+  expirationMs: 86400000
+
+# spring:
+#   messages:
+#     basename: message
+
+# spring:
+#   docker:
+#     compose:
+#       enabled: false
+
+#-----------------------------------
+# Production Profile
+#-----------------------------------
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "production"
+  main:
+    lazy-initialization: true
+
+logging:
+  level:
+    com:
+      tujuhsembilan: INFO
